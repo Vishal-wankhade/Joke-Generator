@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <title>Project 2</title>
+</head>
+<style>
+    body{
+        margin:0px;
+        padding:0px;
+        font-family: 'Rubik', sans-serif;
+        text-align: center;
+
+        box-sizing: border-box;
+    }
+    .parent{
+      height:100vh;
+      width: 100vw; margin:0px;
+        padding:0px;
+      position: relative;
+      /* background-color: #B8B8FF; */
+      background: url("bg.jpg");
+      overflow: hidden;
+    }
+    .parent::after{
+        content: "";
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        height: 65%;
+        width: 100%;
+        background:url("wave.svg");
+        background-repeat: no-repeat;
+        background-position:center;
+        background-size: cover;
+        z-index: 0;
+    }
+    .box{
+        height:300px;
+      width: 45%;
+      position: absolute;
+      top: 50%;
+      left: 50%;z-index: 2;
+      transform:translate(-50%,-50%);
+      background-color:#F8F7FF;
+      border-radius:30px;
+      -webkit-box-shadow: -1px 11px 93px 13px rgba(0,5,116,0.6);
+-moz-box-shadow: -1px 11px 93px 13px rgba(0,5,116,0.6);
+box-shadow: -1px 11px 93px 13px rgba(0,5,116,0.6);
+    }
+    h1{
+        color:#DB9C73;
+        font-size: 25px;
+        padding-top: 20px;
+    }
+    button{
+        height:40px;
+        width: 90%;
+        background-color: #5744C4;
+        color: white;
+        font-size: 25px;
+        border-radius:10px;
+        border:none;
+        margin: 20px;
+    }
+    button:hover{
+        background-color: white;
+        color: #5744C4;
+        transition: 0.2s;
+    }
+    .joke{
+        margin:40px;
+    }
+    .joke h3{
+        color:#5744C4;
+    }
+  @media only screen and (max-width: 600px)  {
+      .box{
+        width: 90%;
+      }
+      .joke{
+        margin:20px;
+      }
+      button{
+        margin:0px;
+      }
+    }
+</style>
+
+<body>
+    <div class="parent">
+       <div class="box">
+        <h1><span>&#128516</span> click on the Button to Generate New Joke <span>&#128516</span></h1>
+        <div class="joke"><h3></h3></div>
+        <button class="jokebtn"> Next Joke</button>
+       </div>
+    </div>
+
+</body>
+<script>
+    const jokeText = document.querySelector('.joke h3')
+    const jokeBtn = document.querySelector('.jokebtn')
+
+
+jokeBtn.addEventListener('click',generateJokes);
+generateJokes();
+
+
+    function generateJokes() {
+       fetch('https://icanhazdadjoke.com/', {
+             headers:{
+                'Accept': 'application/json'
+            }
+        })
+        .then(function(response){
+            return response.json();
+        }).then(function(data){
+            const joke = data.joke;
+            jokeText.innerText = joke;
+        })
+    }
+</script>
+</html>
